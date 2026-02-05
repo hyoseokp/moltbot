@@ -3,7 +3,7 @@
 This file is auto-generated from MEMORY.md with secrets redacted.
 Do NOT add secrets here. Edit MEMORY.md instead.
 
-GeneratedAt: 2026-02-05T20:54:38
+GeneratedAt: 2026-02-05T20:59:58
 
 ﻿# MEMORY.md - Long-Term Memory
 
@@ -107,46 +107,6 @@ C:\Users\user\bot\skills
 - `spectra-snapshot-sync`, `spectra-git-push` 스킬 폴더는 wrapper 중복이라 제거됨.
   - 단, 실제 실행 스크립트(`bot\skills_scripts\spectra_snapshot_sync.py`, `spectra_git_push_update.py`)는 wrapper가 사용하므로 유지.
 
-
-## ?㎛ Key Technical Notes
-- GLM 4.7 紐⑤뜽 ?ъ슜 以?(?꾩옱??gpt-5.2濡?蹂寃??꾨즺)
-- Discord 梨꾨꼸: 1468499965461663917 (紐고듃遊??곌뎄)
-- OpenClaw v2026.2.1
-- **Python Runtime:** `C:\Users\user\miniconda3\python.exe`
-
-## ?뱥 紐낅졊???⑦꽩
-- **"openclaw status"** ????긽 `openclaw status` 紐낅졊 ?ㅽ뻾?댁꽌 Channels & Sessions ?뺣낫 蹂댁뿬二쇨린
-- ?ㅽ뻾 諛⑸쾿: `exec command="openclaw status"`
-
-- **"N媛?泥댄겕"** ??spectra_latest_1.npy??理쒖떊 N媛?0?쇰줈 梨꾩썙吏湲??쒖옉 ?몃뜳?? ?뚮젮二쇨린
-- 紐낅졊?? `check_n_value.py` ?ㅽ뻾
-- ?덉쟾 N媛? 44998 (2026-02-04 20:51 ?뺤씤??
-
-## ?뵍 沅뚰븳 臾몄젣 ?닿껐梨?(2026-02-04)
-
-### Windows ?쒖뒪???뱀꽦
-- Windows?먯꽌 **sudo 紐낅졊???놁쓬**
-- 愿由ъ옄 沅뚰븳???꾩슂???묒뾽? "愿由ъ옄濡??ㅽ뻾" ?꾩슂
-
-### 沅뚰븳 ?닿껐梨?1. **?ㅽ뻾 ??愿由ъ옄 沅뚰븳:**
-   - ?뚯씪 ?고겢由???"愿由ъ옄濡??ㅽ뻾"
-   - ?먮뒗 PowerShell?먯꽌 "愿由ъ옄 沅뚰븳?쇰줈 ?ㅽ뻾"
-
-2. **Task Scheduler 沅뚰븳:**
-   - ?묒뾽 ?앹꽦 ??`/ru SYSTEM` ?ъ슜
-   - `/rl HIGHEST`濡??곗꽑?쒖쐞 理쒓퀬 ?ㅼ젙
-   - ?깅줉?섎㈃ GUI(`taskschd.msc`)?먯꽌 ?뺤씤 媛??
-3. **PowerShell 愿由ъ옄 沅뚰븳 ?ㅽ뻾:**
-   ```powershell
-   Start-Process powershell -Verb RunAs -ArgumentList "-NoProfile", "-Command", "紐낅졊??
-   ```
-
-### ?κ린 硫붾え由?- ?묒뾽 ?ㅼ?以꾨윭 ?깅줉 臾몄젣 沅뚰븳 ??愿由ъ옄 沅뚰븳 ?뺤씤
-- ?뚯씪 蹂듭궗/?곌린 臾몄젣 TEMP 寃쎈줈 ?닿껐
-
----
-
-*Updated: 2026-02-04 21:25*
 ## 2026-02-05 10:34:33 - Main Session
 
 **Decisions & Changes:**
