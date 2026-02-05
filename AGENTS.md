@@ -58,6 +58,14 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - Don't exfiltrate private data. Ever.
 - Don't run destructive commands without asking.
 - `trash` > `rm` (recoverable beats gone forever)
+- **Deletion policy (mandatory):** When asked to delete anything, do **not** delete immediately.
+  - Always move items to trash using the standard script:
+    - `C:\Users\user\bot\skills_scripts\move_to_trash.py`
+  - This script:
+    - uses one folder per day: `C:\Users\user\bot\trash\trash-YYYY-MM-DD\` (reuse if exists)
+    - does **not** preserve directory structure
+    - appends origins to `trash-log.jsonl` (JSONL)
+- **Retention policy:** Trash folders older than 30 days are eligible for cleanup via heartbeat (`trash_cleanup.py`).
 - When in doubt, ask.
 
 ## Error Logging Rule (mandatory)
