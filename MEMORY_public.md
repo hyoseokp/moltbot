@@ -3,117 +3,13 @@
 This file is auto-generated from MEMORY.md with secrets redacted.
 Do NOT add secrets here. Edit MEMORY.md instead.
 
-GeneratedAt: 2026-02-05T19:26:24
+GeneratedAt: 2026-02-05T20:18:51
 
 ﻿# MEMORY.md - Long-Term Memory
 
-## ?쬇 OpenClaw Browser Extension
-
-### Browser Automation Tip
-- **Extension connection issue:** When browser extension disconnects (error: "tab not found"), can automatically click the extension icon using `browser act` action
-- **How to use:** Instead of asking Hyoseok to manually click the extension icon, use:
-  ```
-  browser action=act request={"kind": "click", "ref": "<extension_icon_ref>"}
-  ```
-- **Benefit:** More efficient automation - no need to wait for manual clicks to reconnect extension
-- **Status:** Discovered 2026-02-04, Hyoseok confirmed this method works
-
-### Browser Control Limitations
-- Extension CDP (Chrome DevTools Protocol) connection can be unstable
-- Navigate works even when screenshot fails (tab not found error)
-- Full page screenshots require stable tab connection
-- Sometimes need browser restart to reset extension connection state
-
-## ?뙋 Web Tools
-- Use `web_fetch` for lightweight page access without browser automation
-- Use `browser` action for interactive automation (navigate, screenshot, click)
-
-## ?뱤 Jupyter Lab Integration
-- Hyoseok uses Jupyter Lab with data_gen.ipynb for data visualization
-- Located at: `http://localhost:8888/lab/workspaces/auto-r/tree/data_gen.ipynb`
-- ?좑툘 **DO NOT use browser screenshot** - it halts running cells (CDP interference)
-- Instead use PIL method (see below)
-
-## ?벝 Screen Capture Method
-- **Use PIL (Python Imaging Library)** instead of browser extension
-- **Script location:** `C:\Users\user\bot\work\py\screenshot_pil.py`
-- **How it works:** Uses Python PIL to capture full desktop screen
-- **Advantage:** Zero interference with Jupyter execution, Chrome tabs stay unaffected
-- **Command:** `powershell -NoProfile -Command "& 'C:\Users\user\miniconda3\python.exe' 'C:\Users\user\bot\work\py\screenshot_pil.py'"`
-- **Output:** Screenshots saved to `C:\Users\user\.openclaw\media\screenshots\screenshot_YYYYMMDD_HHMMSS.png`
-- **Status:** Verified working 2026-02-04 18:21 GMT+9
-
-## 🧩 Skill Prompt Standard (for reliable automation)
-
-When creating/updating skills (especially cron/automation skills), use this standard prompt/spec format:
-
-- **Task**: what to do (one paragraph)
-- **Steps**: ordered list (1..n)
-- **Rules/Constraints**: hard requirements (what must/must not happen)
-- **Outputs**: what to send/produce (e.g., Discord summary template)
-- **Failure policy**: stop/continue/retry, and how to alert
-
-(Keep it concise and deterministic. Prefer templates/checklists over prose.)
-
-## 📁 Skill scripts location rule (recommended)
-
-- **Default:** Put reusable/executable Python scripts in:
-  - `C:\Users\user\bot\skills_scripts\`
-- **Exception (allowed):** If a script is a *skill-private helper* (only used by one skill, not intended for reuse), it may live under that skill folder:
-  - `C:\Users\user\bot\skills\<skill-name>\scripts\`
-
-Rule of thumb:
-- shared / cron-called / pipeline core → `bot\skills_scripts\`
-- single-skill helper / internal tooling → `bot\skills\<skill>\scripts\`
-
-## 🗂 bot 폴더 구조 (2026-02-05)
-
-`C:\Users\user\bot` 아래는 OpenClaw/봇 관련 파일을 한 곳에 모아둔 디렉토리다.
-
-- `archive\large\` : 실수로 생성된 대용량/이상한 이름 파일 보관
-- `core-md\` : AGENTS/SOUL/USER/TOOLS/HEARTBEAT/IDENTITY/MEMORY/BOOTSTRAP 등 코어 md 원본(루트에는 하드링크로 남겨 호환 유지)
-- `docs\` : 문서/메모
-- `keys\` : 키 파일(예: sg980222)
-- `skills\` : OpenClaw 스킬 폴더들(각 폴더에 SKILL.md)
-- `skills_scripts\` : 스킬이 실행하는 파이썬 스크립트들
-- `work\` : 실험/작업용 스크립트 및 파일들
-  - `work\py\` : 파이썬 작업 스크립트
-  - `work\ps1\` : PowerShell 스크립트
-  - `work\bat\` : bat/cmd
-  - `work\notebooks\` : ipynb
-  - `work\text\` : txt/xml/js 등
-
-현재 트리(요약):
-
-```
-C:\Users\user\bot
-+---archive\large\
-+---core-md\
-+---docs\
-+---keys\
-+---skills\
-|   +---context-reset\
-|   +---context-summarize-memory\
-|   +---git-pull-rebase\
-|   +---git-push-data-cr\
-|   +---spectra-count-n\
-|   +---spectra-git-push\
-|   +---spectra-snapshot-sync\
-|   \---spectra-sync-all\
-+---skills_scripts\
-|   count_N.py
-|   git_pull_rebase.py
-|   git_push_auto.py
-|   spectra_git_push_update.py
-|   spectra_snapshot_sync.py
-|   spectra_sync_all.py
-\---work\
-    +---bat\
-    +---notebooks\
-    +---ps1\
-    +---py\
-    \---text\
-```
+## (Operational notes moved)
+- Operational/playbook-style notes were moved to `AGENTS.md` under **"Operational Playbook"**.
+- `MEMORY.md` should focus on durable facts/decisions/IDs/state.
 
 ## 🔄 Spectra Sync Automation (2026-02-05 UPDATED)
 
@@ -131,7 +27,7 @@ C:\Users\user\bot
 
 3. **git-push-data-CR** (ID: 616f4640-d4dc-484d-9f45-4bb5ab42fa19)
    - Runs `C:\Users\user\bot\work\py\git_push_auto.py` from PHS directory
-   - **Fixed 2026-02-05:** Changed master?뭢ain, removed unused requests import, added UTF-8 encoding fix
+   - **Fixed 2026-02-05:** 브랜치명 `master`→`main` 변경, unused `requests` import 제거, Windows 한글 콘솔 UTF-8 출력(Wrapper) 적용
    - Discord notification to file at `C:\Users\user\bot\work\text\git_push_notification.txt`
 
 ### Python Path & Encoding
@@ -140,7 +36,7 @@ C:\Users\user\bot
 
 ### Python Path
 - **Python (Miniconda):** `C:\Users\user\miniconda3\python.exe`
-- **NumPy ?뚯씪 遺꾩꽍:** N=44998遺??紐⑤몢 0?쇰줈 梨꾩썙吏?(361 MB, LFS)
+- **NumPy 파일 분석:** `spectra_latest_1.npy`의 유효 데이터 행 수 N=44998 (약 361MB, LFS)
 
 ## ?봽 Spectra Sync Automation (2026-02-05 OPTIMIZED)
 

@@ -207,6 +207,57 @@ Think of it like a human reviewing their journal and updating their mental model
 
 The goal: Be helpful without being annoying. Check in a few times a day, do useful background work, but respect quiet time.
 
+## 🧭 Operational Playbook (moved from MEMORY.md)
+
+### Browser automation (OpenClaw browser extension)
+- When the browser extension disconnects (e.g. "tab not found"), you can often recover by clicking the extension icon via tool automation:
+  ```
+  browser action=act request={"kind": "click", "ref": "<extension_icon_ref>"}
+  ```
+- CDP connection can be unstable:
+  - navigate may work even when screenshot fails
+  - full page screenshots require stable connection
+  - sometimes a browser restart resets the extension state
+
+### Web tools rule of thumb
+- Use `web_fetch` for lightweight page access (no interactive automation).
+- Use `browser` for interactive tasks (navigate/snapshot/click/type).
+
+### Jupyter Lab: do not interfere with running cells
+- Jupyter Lab is used for visualization (e.g. `data_gen.ipynb`).
+- **DO NOT use browser screenshots** while Jupyter cells are running (CDP interference can halt cells).
+- Prefer OS-level capture instead (PIL method).
+
+### Screen capture method (PIL)
+- Script: `C:\Users\user\bot\work\py\screenshot_pil.py`
+- Run:
+  ```powershell
+  powershell -NoProfile -Command "& 'C:\Users\user\miniconda3\python.exe' 'C:\Users\user\bot\work\py\screenshot_pil.py'"
+  ```
+- Output: `C:\Users\user\.openclaw\media\screenshots\screenshot_YYYYMMDD_HHMMSS.png`
+
+### Skill prompt standard (for reliable automation)
+When creating/updating skills (especially cron/automation skills), use:
+- **Task**: what to do (one paragraph)
+- **Steps**: ordered list (1..n)
+- **Rules/Constraints**: hard requirements (must/must not)
+- **Outputs**: what to send/produce (templates)
+- **Failure policy**: stop/continue/retry + how to alert
+
+### Script placement rule
+- Shared / cron-called / pipeline core scripts → `C:\Users\user\bot\skills_scripts\`
+- Single-skill private helpers → `C:\Users\user\bot\skills\<skill-name>\scripts\`
+
+### Workspace structure (bot folder)
+`C:\Users\user\bot` is the main bot workspace:
+- `archive\large\` big accidental files
+- `core-md\` core markdown sources
+- `docs\` notes
+- `keys\` key files (**never push publicly**)
+- `skills\` skill folders (each has `SKILL.md`)
+- `skills_scripts\` python scripts called by skills
+- `work\` scratch/experiments
+
 ## Make It Yours
 
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.
