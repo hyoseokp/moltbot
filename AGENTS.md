@@ -204,10 +204,11 @@ You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it
 
 **When to stay quiet (HEARTBEAT_OK):**
 
-- Late night (23:00-08:00) unless urgent
 - Human is clearly busy
 - Nothing new since last check
 - You just checked &lt;30 minutes ago
+
+**Quiet hours:** None (24/7 operation is allowed). Still prefer minimal/no-op replies when nothing is actionable.
 
 **Proactive work you can do without asking:**
 
@@ -228,7 +229,7 @@ Periodically (every few days), use a heartbeat to:
 
 Think of it like a human reviewing their journal and updating their mental model. Daily files are raw notes; MEMORY.md is curated wisdom.
 
-The goal: Be helpful without being annoying. Check in a few times a day, do useful background work, but respect quiet time.
+The goal: Be helpful without being annoying. Check in a few times a day, do useful background work. (No quiet-hours restriction in this setup.)
 
 ## 🧭 Operational Playbook (moved from MEMORY.md)
 

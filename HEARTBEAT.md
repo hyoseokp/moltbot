@@ -4,6 +4,8 @@
 
 Run these checks on each heartbeat; keep responses minimal. If nothing needs attention, reply `HEARTBEAT_OK`.
 
+- Quiet hours: **none** (24/7 operation).
+
 1) **Spectra cron health**
    - Check cron job `spectra-sync-all (wrapper)` (id `82a4be25-909a-4b4c-8812-c14b2c886073`): last run status + next run time.
    - If last run FAILED or no runs recently → alert in Discord channel 1468499965461663917.
