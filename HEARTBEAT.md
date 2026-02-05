@@ -7,8 +7,12 @@ Run these checks on each heartbeat; keep responses minimal. If nothing needs att
 - Quiet hours: **none** (24/7 operation).
 
 1) **Spectra cron health**
-   - Check cron job `spectra-sync-all (wrapper)` (id `82a4be25-909a-4b4c-8812-c14b2c886073`): last run status + next run time.
-   - If last run FAILED or no runs recently → alert in Discord channel 1468499965461663917.
+   - Check cron job `spectra-sync-all (wrapper)` (id `82a4be25-909a-4b4c-8812-c14b2c886073`).
+   - Evaluate health based on **the most recent run only**:
+     - Alert if `lastStatus != ok`, OR
+     - Alert if `lastRunAt` is too old (e.g., > 3 hours for a 2-hour job).
+   - Do **not** alert based on older historical failures if the most recent run is OK.
+   - Also note `nextRunAt` in the alert.
 
 2) **Daily memory note cron**
    - Ensure daily note cron exists: `daily-memory-note (22:00 KST)` (id `e7c40716-6b78-4e87-9872-5287025300f2`).
