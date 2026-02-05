@@ -59,6 +59,21 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - `trash` > `rm` (recoverable beats gone forever)
 - When in doubt, ask.
 
+## Error Logging Rule (mandatory)
+
+When a session/task hits a non-trivial error worth debugging later:
+
+1) Ensure folder exists: `C:\Users\user\bot\error\`
+2) Write a markdown file there named:
+   - `YYYY-MM-DD-HH-MM-error.md`
+3) Include (at minimum):
+   - what command/skill was running
+   - error message/stack trace (sanitized: no tokens/keys)
+   - relevant file paths
+   - what was tried / next suggested action
+
+This is the default postmortem log location for OpenClaw work.
+
 ## External vs Internal
 
 **Safe to do freely:**
