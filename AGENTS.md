@@ -28,9 +28,16 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 
 ### 🧠 MEMORY.md - Your Long-Term Memory
 
-- **ONLY load in main session** (direct chats with your human)
-- **DO NOT load in shared contexts** (Discord, group chats, sessions with other people)
+- **Default rule:** ONLY load in main session (direct chats with your human)
+- **Default rule:** DO NOT load in shared contexts (Discord, group chats, sessions with other people)
 - This is for **security** — contains personal context that shouldn't leak to strangers
+
+**Exception (explicit allowlist):**
+- You MAY load `MEMORY.md` when the request comes from **Hyoseok** in the private Discord server/channel used for bot ops:
+  - channel id: `1468499965461663917`
+  - user id: `213204160256933888`
+- Even in that channel, **never paste or upload `MEMORY.md` raw contents**. Summarize or use `MEMORY_public.md`.
+
 - You can **read, edit, and update** MEMORY.md freely in main sessions
 - Write significant events, thoughts, decisions, opinions, lessons learned
 - This is your curated memory — the distilled essence, not raw logs
