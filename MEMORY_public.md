@@ -3,7 +3,7 @@
 This file is auto-generated from MEMORY.md with secrets redacted.
 Do NOT add secrets here. Edit MEMORY.md instead.
 
-GeneratedAt: 2026-02-05T20:24:08
+GeneratedAt: 2026-02-05T20:54:38
 
 ﻿# MEMORY.md - Long-Term Memory
 
@@ -11,95 +11,102 @@ GeneratedAt: 2026-02-05T20:24:08
 - Operational/playbook-style notes were moved to `AGENTS.md` under **"Operational Playbook"**.
 - `MEMORY.md` should focus on durable facts/decisions/IDs/state.
 
-## 🔄 Spectra Sync Automation (2026-02-05 UPDATED)
+## 🔄 Spectra Sync Automation (현재 운영)
 
-### Three Cron Jobs Running Every 2 Hours:
+### Cron (단일 파이프라인)
+- **cron job:** `spectra-sync-all (wrapper)`
+- **주기:** 2시간마다 (even-hour align)
+- **cron id:** `82a4be25-909a-4b4c-8812-c14b2c886073`
+- **동작:** Cron → `spectra-sync-all` skill → wrapper script 실행(2-step)
+  1) `spectra_snapshot_sync.py` (dataset → `D:\dataset\data_CR_repo`)
+  2) `spectra_git_push_update.py` (dataset → `C:\Users\user\PHS`)
+- **정책:** PHS repo에서는 **오직 `spectra_latest_1.npy`만** 업데이트/푸시
 
-1. **spectra_snapshot_sync** (ID: 410f89b2-8bf8-4d6f-880d-1e385b7c212b)
-   - Copies `D:\dataset\spectra_result\spectra_latest_1.npy` ??`D:\dataset\data_CR_repo\spectra_latest_1.npy`
-   - Runs git add/commit/push to main branch
-   - Discord notification to channel 1468499965461663917
-   - **Key:** Never touches spectra_latest_0.npy
+### Python Runtime
+- `C:\Users\user\miniconda3\python.exe`
 
-2. **spectra-git-push** (ID: 958f2b00-33ca-4b3d-8386-e0ba387dfcec)
-   - Runs `C:\Users\user\bot\work\py\spectra_git_push_update.py` from PHS directory
-   - Handles special git push scenarios with fetch/pull fallback
+### 폴더/스킬 최신 트리 (2026-02-05)
 
-3. **git-push-data-CR** (ID: 616f4640-d4dc-484d-9f45-4bb5ab42fa19)
-   - Runs `C:\Users\user\bot\work\py\git_push_auto.py` from PHS directory
-   - **Fixed 2026-02-05:** 브랜치명 `master`→`main` 변경, unused `requests` import 제거, Windows 한글 콘솔 UTF-8 출력(Wrapper) 적용
-   - Discord notification to file at `C:\Users\user\bot\work\text\git_push_notification.txt`
+**bot 폴더**
+```text
+C:\Users\user\bot
++---archive
+|   \---large
++---core-md
++---docs
++---keys
++---repos
+|   \---moltbot
++---skills
+|   +---context-reset
+|   |   \---scripts
+|   +---context-summarize-memory
+|   |   \---scripts
+|   +---core-md-git-push
+|   +---discord-admin
+|   +---discord-browser
+|   +---git-pull-rebase
+|   +---github-create-repo
+|   +---github-create-repo-hyoseokp
+|   +---spectra-count-n
+|   \---spectra-sync-all
++---skills_scripts
+\---work
+    +---bat
+    +---notebooks
+    +---ps1
+    +---py
+    \---text
 
-### Python Path & Encoding
-- **Python (Miniconda):** `C:\Users\user\miniconda3\python.exe`
-- **Encoding fix applied:** UTF-8 wrapper in git_push_auto.py for Windows Korean console
+```
 
-### Python Path
-- **Python (Miniconda):** `C:\Users\user\miniconda3\python.exe`
-- **NumPy 파일 분석:** `spectra_latest_1.npy`의 유효 데이터 행 수 N=44998 (약 361MB, LFS)
+**skills 폴더**
+```text
+C:\Users\user\bot\skills
++---context-reset
+|   |   SKILL.md
+|   |
+|   \---scripts
+|           reset_session.py
+|
++---context-summarize-memory
+|   |   SKILL.md
+|   |
+|   \---scripts
+|           debug_structure.py
+|           summarize_context.py
+|
++---core-md-git-push
+|       SKILL.md
+|
++---discord-admin
+|       SKILL.md
+|
++---discord-browser
+|       SKILL.md
+|
++---git-pull-rebase
+|       SKILL.md
+|
++---github-create-repo
+|       SKILL.md
+|
++---github-create-repo-hyoseokp
+|       SKILL.md
+|
++---spectra-count-n
+|       SKILL.md
+|
+\---spectra-sync-all
+        SKILL.md
 
-## 🔧 Spectra Sync Automation (2026-02-05 OPTIMIZED)
+```
 
-### 최적화된 구조
-- **공유 Python 스크립트 위치:** `C:\Users\user\bot\skills_scripts\`
-- **Skill 폴더 위치:** `C:\Users\user\bot\skills\`
-- **Cron Jobs:** 각 skill을 **2시간마다** 실행
+### 스킬/구조 변경 메모
+- `git-push-data-cr` (DEPRECATED) 스킬 제거됨.
+- `spectra-snapshot-sync`, `spectra-git-push` 스킬 폴더는 wrapper 중복이라 제거됨.
+  - 단, 실제 실행 스크립트(`bot\skills_scripts\spectra_snapshot_sync.py`, `spectra_git_push_update.py`)는 wrapper가 사용하므로 유지.
 
-### Cron Jobs (모두 Skill 호출 방식으로 변경 완료)
-
-| Cron Job ID | 실행 Skill | 실행 스크립트 | 상태 |
-|---|---|---|---|
-| 410f89b2-8bf8-4d6f-880d-1e385b7c212b | spectra-snapshot-sync | spectra_snapshot_sync.py | (2026-02-05 11:02) 반영 |
-| 958f2b00-33ca-4b3d-8386-e0ba387dfcec | spectra-git-push | spectra_git_push_update.py | (2026-02-05 11:02) 반영 |
-| 616f4640-d4dc-484d-9f45-4bb5ab42fa19 | git-push-data-cr | git_push_auto.py | (2026-02-05 11:02) 반영 |
-
-**구조 변경 요약**
-- 이전: `Cron이 Python 스크립트를 직접 실행`
-- 현재: `Cron이 Skill을 호출 → Skill이 Python 스크립트 실행`
-
-### Skill 목록 (요약)
-
-#### 1) context-reset
-- 위치: `C:\Users\user\bot\skills\context-reset\`
-- 기능: 세션 컨텍스트 초기화
-  - 명령: `context reset discord` 또는 `context reset main`
-
-#### 2) context-summarize-memory
-- 위치: `C:\Users\user\bot\skills\context-summarize-memory\`
-- 기능: 현재 컨텍스트 요약 후 `MEMORY.md`에 저장
-
-#### 3) spectra-snapshot-sync
-- 위치: `C:\Users\user\bot\skills\spectra-snapshot-sync\`
-- 스크립트: `C:\Users\user\bot\skills_scripts\spectra_snapshot_sync.py`
-- 기능: `spectra_latest_1.npy` 스냅샷 복사 + git 커밋/푸시
-- 주기: 2시간
-
-#### 4) spectra-git-push
-- 위치: `C:\Users\user\bot\skills\spectra-git-push\`
-- 스크립트: `C:\Users\user\bot\skills_scripts\spectra_git_push_update.py`
-- 기능: PHS repo로 `spectra_latest_1.npy` 복사 + git 커밋/푸시
-- 주기: 2시간
-
-#### 5) git-push-data-cr
-- 위치: `C:\Users\user\bot\skills\git-push-data-cr\`
-- 스크립트: `C:\Users\user\bot\skills_scripts\git_push_auto.py`
-- 기능: PHS repo 자동 커밋/푸시
-- 주기: 2시간
-
-### 새 Skill 생성 체크리스트
-- [ ] 공용 Python 스크립트는 `C:\Users\user\bot\skills_scripts\`에 둔다
-- [ ] Skill 폴더는 `C:\Users\user\bot\skills\[skill-name]\`에 만든다
-- [ ] `SKILL.md`에 실행 커맨드/경로를 명확히 적는다
-- [ ] Windows 콘솔 한글 깨짐 방지: stdout UTF-8 wrapper 적용
-  ```python
-  import sys
-  sys.stdout = __import__('io').TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-  ```
-- [ ] Miniconda Python으로 테스트:
-  ```bash
-  C:\Users\user\miniconda3\python.exe C:\Users\user\bot\skills_scripts\[script_name].py
-  ```
-- [ ] 필요한 경우 `MEMORY.md`에 “결정/ID/상태”만 요약해서 추가
 
 ## ?㎛ Key Technical Notes
 - GLM 4.7 紐⑤뜽 ?ъ슜 以?(?꾩옱??gpt-5.2濡?蹂寃??꾨즺)
